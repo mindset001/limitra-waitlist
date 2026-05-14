@@ -116,7 +116,7 @@ button {
   background-color: var(--bg-light);
   overflow: hidden;
   padding-top: 40px;
-  padding-bottom: 120px;
+  padding-bottom: 0px;
 }
 
 .hero-pattern {
@@ -769,29 +769,34 @@ button {
 /* Responsive */
 @media (max-width: 768px) {
   .hero h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
+  }
+  .hero p {
+    font-size: 14px;
   }
   .features-section h2, .testimonials-section h2, .faq-section h2, .cta-section h2 {
     font-size: 2rem;
   }
-  /* .waitlist-form {
-    flex-direction: row;
-    background: transparent;
-    box-shadow: none;
-    gap: 10px;
-    padding: 0;
-  }
-  .waitlist-form input {
-    border-radius: 9999px;
-    padding: 16px;
-    background: var(--bg-input);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-soft);
-  }
-  .waitlist-form button {
-    width: 100%;
-    padding: 16px;
-  } */
+
+  .waitlist-form {
+  display: flex;
+  max-width: 550px;
+  margin: 0 auto 16px;
+  background: var(--bg-input);
+  border-radius: 9999px;
+  padding: 6px;
+  border: 1px solid var(--border-color);
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+}
   .footer-content {
     display: flex;
     flex-direction: column;
