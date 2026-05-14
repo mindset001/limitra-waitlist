@@ -207,13 +207,13 @@ button {
 
 :root[data-theme="dark"] .hero h1 {
   color: #FFFFFF;
-  font-size: clamp(3.5rem, 5vw, 5rem);
+  font-size: clamp(64px);
   font-weight: 600;
   letter-spacing: 0;
 }
 
 .hero p {
-  font-size: 1.15rem;
+  font-size: 14px;
   color: var(--text-muted);
   max-width: 600px;
   margin: 0 auto 40px;
@@ -261,7 +261,7 @@ button {
 }
 
 :root[data-theme="dark"] .hero .waitlist-form {
-  max-width: 632px;
+  max-width: 520px;
   background: rgba(47, 47, 47, 0.72);
   border-color: rgba(255, 255, 255, 0.42);
   box-shadow: none;
