@@ -9,8 +9,8 @@
   --bg-input: #E8EAED;
   --bg-subtle-hover: #FAFAFA;
   --text-main: #1A1A1A;
-  --text-muted: #666666;
-  --text-soft: #697386;
+  --text-muted: #9CA3AF;
+  --text-soft: #6A7282;
   --border-color: #EAEAEA;
   --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.03);
   --shadow-medium: 0 10px 30px rgba(0, 0, 0, 0.06);
@@ -640,6 +640,13 @@ button {
 }
 
 /* CTA */
+.fast{
+  background: #F67208;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  color: #EFEFEF;
+}
 .cta-section {
   background-color: var(--primary-blue);
   color: white;
@@ -647,6 +654,7 @@ button {
   position: relative;
   overflow: hidden;
 }
+
 
 .cta-pattern {
   position: absolute;
@@ -680,7 +688,7 @@ button {
 /* Footer */
 .footer {
   background-color: var(--bg-light);
-  padding: 78px 20px 170px;
+  padding: 78px 10px 70px;
   border-bottom: 4px solid var(--footer-border);
 }
 
@@ -710,12 +718,18 @@ button {
   align-items: center;
   gap: 28px;
 }
-
+ .footer-navs{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 22px;
+  }
 .footer-links {
   display: flex;
   justify-content: flex-end;
   gap: 44px;
-  font-size: 1.35rem;
+  font-size: 14px;
   font-weight: 400;
   color: var(--text-soft);
   line-height: 1;
@@ -746,7 +760,7 @@ button {
 
 .copyright {
   text-align: center;
-  font-size: 1.32rem;
+  font-size: 14px;
   color: var(--text-muted);
   line-height: 1;
   white-space: nowrap;
@@ -760,8 +774,8 @@ button {
   .features-section h2, .testimonials-section h2, .faq-section h2, .cta-section h2 {
     font-size: 2rem;
   }
-  .waitlist-form {
-    flex-direction: column;
+  /* .waitlist-form {
+    flex-direction: row;
     background: transparent;
     box-shadow: none;
     gap: 10px;
@@ -777,9 +791,9 @@ button {
   .waitlist-form button {
     width: 100%;
     padding: 16px;
-  }
+  } */
   .footer-content {
-    grid-template-columns: 1fr;
+    display: flex;
     flex-direction: column;
     text-align: center;
     justify-content: center;
@@ -788,15 +802,23 @@ button {
   .footer {
     padding: 56px 20px 80px;
   }
+  .fast h1{
+    font-size: 12px;
+  }
   .footer-logo {
     justify-content: center;
   }
   .footer-links {
+    display: flex;
+    flex-direction: row;
     justify-content: center;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     gap: 22px;
     font-size: 1.05rem;
   }
+ .footer-navs{
+  display: none;
+ }
   .footer-center {
     gap: 20px;
   }

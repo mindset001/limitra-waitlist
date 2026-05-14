@@ -112,7 +112,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="features-section section">
+      <section className="features-section section" id="about">
         <div className="container">
           <h2>Why LIMITRA?</h2>
           <div className="features-grid">
@@ -197,7 +197,7 @@ export default function Home() {
       </section>
 
       {/* FAQ Section */}
-      <section className="faq-section section">
+      <section className="faq-section section" id="faq">
         <div className="container">
           <h2>Frequently Asked Questions</h2>
           <div className="faq-list">
@@ -236,11 +236,14 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="cta-section section">
-        <div className="cta-pattern"></div>
-        <div className="fast">
+      <section className="fast">
+              <div className="">
           <h1>Spots are filling fast, 5000+ members and counting</h1>
         </div>
+      </section>
+      <section className="cta-section section">
+        <div className="cta-pattern"></div>
+      
         <div className="container">
           <h2>Your spot is waiting,<br /> Claim it Now!</h2>
           <p>5000+ Nigerians already secured founding member access and exclusive launch pricing</p>
@@ -255,23 +258,29 @@ export default function Home() {
           <div className="footer-center">
             <div className="social-icons">
               <a href="#" aria-label="Instagram">
-                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
               </a>
               <a href="#" aria-label="Twitter">
-                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
               </a>
               <a href="#" aria-label="Facebook">
-                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
               </a>
             </div>
             <div className="copyright">
               © 2026 LIMITRA. All rights reserved.
             </div>
-          </div>
-          <div className="footer-links">
+              <div className="footer-links">
             <a href="#">Privacy</a>
             <a href="#">Terms</a>
             <a href="#">Contact</a>
+          </div>
+          </div>
+          <div className="footer-navs">
+            <p><a href="/">Home</a></p>
+                <p><a href="#">Guide</a></p>
+                  <p><a href="#about">About</a></p>
+              <p><a href="#faq">FAQ</a></p>
           </div>
         </div>
       </footer>
