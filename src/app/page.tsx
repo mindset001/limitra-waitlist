@@ -11,6 +11,14 @@ const Logo = () => (
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
+  const toggleTheme = () => {
+    const currentTheme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+    const nextTheme = currentTheme === "dark" ? "light" : "dark";
+
+    document.documentElement.dataset.theme = nextTheme;
+    window.localStorage.setItem("limitra-theme", nextTheme);
+  };
+
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
   };
@@ -30,13 +38,36 @@ export default function Home() {
             <Logo />
           </div>
 
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={toggleTheme}
+            aria-label="Toggle color mode"
+          >
+            <svg className="theme-toggle-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2"></path>
+              <path d="M12 20v2"></path>
+              <path d="m4.93 4.93 1.41 1.41"></path>
+              <path d="m17.66 17.66 1.41 1.41"></path>
+              <path d="M2 12h2"></path>
+              <path d="M20 12h2"></path>
+              <path d="m6.34 17.66-1.41 1.41"></path>
+              <path d="m19.07 4.93-1.41 1.41"></path>
+            </svg>
+            <svg className="theme-toggle-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M12 3a6 6 0 0 0 9 7.4A9 9 0 1 1 12 3Z"></path>
+            </svg>
+            <span>Theme</span>
+          </button>
+
           <div className="badge">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path></svg>
-            Exclusive Access
+            Now Accepting Members
           </div>
           
-          <h1>Something Premium<br/>Is Coming.</h1>
-          <p>LIMITRA is launching soon. Join the waitlist for exclusive early access, first drops, and launch offers.</p>
+          <h1>Nigeria&apos;s Premium<br/>Marketplace is Almost Here</h1>
+          <p>LIMITRA is launching soon. Join the waitlist <br />for exclusive early access, first drops, and launch offers.</p>
           
           <div className="form-wrapper">
             <form className="waitlist-form" onSubmit={handleJoinWaitlist}>
@@ -89,8 +120,8 @@ export default function Home() {
               <div className="feature-icon">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
               </div>
-              <h3>Exclusive Product Drops</h3>
-              <p>Access limited-edition items before anyone else. Premium quality, limited quantity.</p>
+              <h3>First Access. Every Time.</h3>
+              <p>Shop premium products sourced from the best markets — before they sell out.</p>
             </div>
             <div className="feature-card">
               <div className="feature-icon">
@@ -207,10 +238,13 @@ export default function Home() {
       {/* CTA Section */}
       <section className="cta-section section">
         <div className="cta-pattern"></div>
+        <div className="fast">
+          <h1>Spots are filling fast, 5000+ members and counting</h1>
+        </div>
         <div className="container">
-          <h2>Don&apos;t Miss the Launch.</h2>
-          <p>Join thousands already waiting for priority access.</p>
-          <button className="btn btn-accent" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Join the Waitlist</button>
+          <h2>Your spot is waiting,<br /> Claim it Now!</h2>
+          <p>5000+ Nigerians already secured founding member access and exclusive launch pricing</p>
+          <button className="btn btn-accent" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Claim My Spot</button>
         </div>
       </section>
 
