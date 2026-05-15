@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 const Logo = () => (
@@ -74,7 +75,7 @@ export default function Home() {
               <input type="email" placeholder="Your Email" required />
               <button type="submit" className="btn btn-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '6px'}}><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
-                Subscribe
+                Claim My Spot
               </button>
             </form>
             <div className="social-proof">
@@ -257,11 +258,14 @@ export default function Home() {
           <Logo />
           <div className="footer-center">
             <div className="social-icons">
+              <a href="#" aria-label="WhatsApp">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M3.5 20.5 5 16.3A8.3 8.3 0 1 1 8 19.1l-4.5 1.4Z"></path><path d="M8.8 8.6c.2-.4.3-.4.6-.4h.5c.2 0 .4 0 .5.4l.7 1.7c.1.3 0 .5-.1.6l-.4.5c-.1.1-.2.3-.1.5.4.8 1.2 1.7 2.2 2.2.2.1.4.1.5-.1l.6-.7c.1-.2.3-.2.6-.1l1.7.8c.3.1.4.3.4.5 0 .9-.8 1.7-1.7 1.7-1.1 0-2.9-.5-4.6-2.1-1.6-1.5-2.5-3.4-2.5-4.5 0-.5.2-.9.6-1.4Z"></path></svg>
+              </a>
               <a href="#" aria-label="Instagram">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
               </a>
-              <a href="#" aria-label="Twitter">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+              <a href="#" aria-label="X">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4l16 16"></path><path d="M20 4 4 20"></path></svg>
               </a>
               <a href="#" aria-label="Facebook">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
@@ -270,14 +274,15 @@ export default function Home() {
             <div className="copyright">
               © 2026 LIMITRA. All rights reserved.
             </div>
-              <div className="footer-links">
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-            <a href="#">Contact</a>
-          </div>
+            <p className="footer-domain">limitra.com.ng</p>
+            <div className="footer-links">
+              <a href="#">Privacy</a>
+              <a href="#">Terms</a>
+              <a href="#">Contact</a>
+            </div>
           </div>
           <div className="footer-navs">
-            <p><a href="/">Home</a></p>
+            <p><Link href="/">Home</Link></p>
                 <p><a href="#">Guide</a></p>
                   <p><a href="#about">About</a></p>
               <p><a href="#faq">FAQ</a></p>
