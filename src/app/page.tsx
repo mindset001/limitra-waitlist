@@ -1,16 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const Logo = () => (
   <div className="footer-logo" style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center' }}>
-    <img src="/assets/images/logo2.png" alt="Limitra Logo" height={40} />
+    <img src="/assets/images/logo2.png" alt="Limitra Logo" style={{ height: 'clamp(32px, 8vw, 48px)', width: 'auto' }} />
   </div>
 );
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [activeCarouselDot, setActiveCarouselDot] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const toggleTheme = () => {
     const currentTheme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
@@ -29,13 +31,37 @@ export default function Home() {
     alert("Thank you for joining the waitlist!");
   };
 
+  useEffect(() => {
+    const handleCarouselScroll = () => {
+      if (carouselRef.current) {
+        const scrollLeft = carouselRef.current.scrollLeft;
+        const cardWidth = carouselRef.current.offsetWidth - 40;
+        const gapWidth = 20;
+        const cardTotal = cardWidth + gapWidth;
+        
+        const newActiveIndex = Math.round((scrollLeft + cardWidth / 2) / cardTotal);
+        setActiveCarouselDot(Math.min(newActiveIndex, 5));
+      }
+    };
+
+    const carousel = carouselRef.current;
+    if (carousel) {
+      carousel.addEventListener('scroll', handleCarouselScroll, { passive: true });
+      // Initial call
+      handleCarouselScroll();
+      return () => carousel.removeEventListener('scroll', handleCarouselScroll);
+    }
+  }, []);
+
   return (
     <main>
       {/* Hero Section */}
       <section className="hero section">
         <div className="hero-pattern"></div>
         <div className="container">
-          <div className="logo-container">
+
+         <div className="hero-header">
+           <div className="logo-container">
             <Logo />
           </div>
 
@@ -59,8 +85,8 @@ export default function Home() {
             <svg className="theme-toggle-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M12 3a6 6 0 0 0 9 7.4A9 9 0 1 1 12 3Z"></path>
             </svg>
-            <span>Theme</span>
           </button>
+         </div>
 
           <div className="badge">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path></svg>
@@ -115,8 +141,8 @@ export default function Home() {
       {/* Features Section */}
       <section className="features-section section" id="about">
         <div className="container">
-          <h2>Why LIMITRA?</h2>
-          <div className="features-grid">
+          <h2>Why Choose LIMITRA?</h2>
+          <div className="features-grid" ref={carouselRef}>
             <div className="feature-card">
               <div className="feature-icon">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
@@ -160,7 +186,15 @@ export default function Home() {
               <p>Handpicked essentials that define modern luxury and sophisticated style.</p>
             </div>
           </div>
-          <p style={{ marginTop: '60px', color: 'rgba(255,255,255,0.8)', fontSize: '0.95rem' }}>Built for shoppers who value quality and style.</p>
+          <div className="carousel-dots">
+            {[0, 1, 2, 3, 4, 5].map((index) => (
+              <span 
+                key={index}
+                className={`carousel-dot ${activeCarouselDot === index ? 'active' : ''}`}
+              ></span>
+            ))}
+          </div>
+          <p className="features-desc" style={{ marginTop: '60px', color: 'rgba(255,255,255,0.8)', fontSize: '0.95rem' }}>Built for shoppers who value quality and style.</p>
         </div>
       </section>
 
