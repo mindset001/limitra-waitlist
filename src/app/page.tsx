@@ -12,6 +12,10 @@ const Logo = () => (
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [activeCarouselDot, setActiveCarouselDot] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [formData, setFormData] = useState({ fullName: '', email: '', phoneNumber: '' });
+  const [waitlistPosition, setWaitlistPosition] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const toggleTheme = () => {
@@ -28,7 +32,20 @@ export default function Home() {
 
   const handleJoinWaitlist = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Thank you for joining the waitlist!");
+    setShowModal(true);
+  };
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleModalSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const position = Math.floor(Math.random() * (5000 - 100 + 1)) + 100;
+    setWaitlistPosition(position);
+    setShowModal(false);
+    setShowConfirmation(true);
   };
 
   useEffect(() => {
@@ -323,6 +340,83 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Sign Up Modal */}
+      {showModal && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>Claim Your Spot</h2>
+            <form onSubmit={handleModalSubmit} className="modal-form">
+              <div className="form-group">
+                <label htmlFor="fullName">Full Name</label>
+                <input
+                  type="text"
+                  id="fullName"
+                  name="fullName"
+                  placeholder="Your Full Name"
+                  value={formData.fullName}
+                  onChange={handleFormChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Your Email"
+                  value={formData.email}
+                  onChange={handleFormChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="phoneNumber">Phone Number</label>
+                <input
+                  type="tel"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  placeholder="Your Phone Number"
+                  value={formData.phoneNumber}
+                  onChange={handleFormChange}
+                  required
+                />
+              </div>
+              <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
+                Subscribe
+              </button>
+            </form>
+            <button 
+              className="modal-close" 
+              onClick={() => setShowModal(false)}
+              aria-label="Close modal"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Confirmation Modal */}
+      {showConfirmation && (
+        <div className="modal-overlay" onClick={() => setShowConfirmation(false)}>
+          <div className="modal-content confirmation-modal" onClick={(e) => e.stopPropagation()}>
+            <h2>Congratulations</h2>
+            <div className="confirmation-box">
+              <p>You&apos;re the <span className="position-number">{waitlistPosition}</span> Person to join our waitlist</p>
+            </div>
+            <p className="confirmation-text">An email will be delivered to right before <span className="limitra-brand">Limitra&apos;s</span> launch</p>
+            <button 
+              className="btn btn-primary" 
+              onClick={() => setShowConfirmation(false)}
+              style={{ width: '100%', marginTop: '20px' }}
+            >
+              Got It
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
