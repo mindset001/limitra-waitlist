@@ -36,12 +36,7 @@ export default function Home() {
 
   const handleJoinWaitlist = (e: React.FormEvent) => {
     e.preventDefault();
-    const formElement = e.currentTarget as HTMLFormElement;
-    const emailInput = formElement.querySelector('input[type="email"]') as HTMLInputElement;
-    const email = emailInput?.value || '';
-
-    setHeroEmail(email);
-    setFormData(prev => ({ ...prev, email: email }));
+    setFormData(prev => ({ ...prev, email: heroEmail }));
     setShowModal(true);
   };
 
@@ -86,6 +81,7 @@ export default function Home() {
       setShowConfirmation(true);
       // Reset form
       setFormData({ fullName: '', email: '', phoneNumber: '' });
+      setHeroEmail('');
     } catch (error) {
       console.error('Error submitting form:', error);
       messageApi.error('An error occurred. Please try again.');
@@ -162,7 +158,13 @@ export default function Home() {
 
           <div className="form-wrapper">
             <form className="waitlist-form" onSubmit={handleJoinWaitlist}>
-              <input type="email" placeholder="Your Email" required />
+              <input 
+                type="email" 
+                placeholder="Your Email" 
+                required 
+                value={heroEmail}
+                onChange={(e) => setHeroEmail(e.target.value)}
+              />
               <button type="submit" className="btn btn-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px' }}><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
                 Claim My Spot
