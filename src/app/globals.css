@@ -157,7 +157,12 @@ button {
 .logo-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-bottom: 60px;
+}
+
+.hero-header .logo-container {
+  margin-bottom: 0;
 }
 
 .hero-header {
@@ -991,6 +996,10 @@ button {
 @media (max-width: 768px) {
   .logo-container {
     margin-bottom: 40px;
+  }
+
+  .hero-header .logo-container {
+    margin-bottom: 0;
   }
 
   .hero-header {

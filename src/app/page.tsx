@@ -14,6 +14,7 @@ export default function Home() {
   const [activeCarouselDot, setActiveCarouselDot] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [heroEmail, setHeroEmail] = useState('');
   const [formData, setFormData] = useState({ fullName: '', email: '', phoneNumber: '' });
   const [waitlistPosition, setWaitlistPosition] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -32,20 +33,59 @@ export default function Home() {
 
   const handleJoinWaitlist = (e: React.FormEvent) => {
     e.preventDefault();
+    const formElement = e.currentTarget as HTMLFormElement;
+    const emailInput = formElement.querySelector('input[type="email"]') as HTMLInputElement;
+    const email = emailInput?.value || '';
+    
+    setHeroEmail(email);
+    setFormData(prev => ({ ...prev, email: email }));
     setShowModal(true);
   };
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // For phone number, only allow digits and +
+    if (name === 'phoneNumber') {
+      const filteredValue = value.replace(/[^\d+]/g, '');
+      setFormData(prev => ({ ...prev, [name]: filteredValue }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
-  const handleModalSubmit = (e: React.FormEvent) => {
+  const handleModalSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const position = Math.floor(Math.random() * (5000 - 100 + 1)) + 100;
-    setWaitlistPosition(position);
-    setShowModal(false);
-    setShowConfirmation(true);
+    
+    try {
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (response.status === 409) {
+          alert('This email is already registered on our waitlist!');
+        } else {
+          alert('An error occurred. Please try again.');
+        }
+        return;
+      }
+
+      setWaitlistPosition(data.position);
+      setShowModal(false);
+      setShowConfirmation(true);
+      // Reset form
+      setFormData({ fullName: '', email: '', phoneNumber: '' });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('An error occurred. Please try again.');
+    }
   };
 
   useEffect(() => {
@@ -327,9 +367,9 @@ export default function Home() {
             </div>
             <p className="footer-domain">limitra.com.ng</p>
             <div className="footer-links">
-              <a href="#">Privacy</a>
-              <a href="#">Terms</a>
-              <a href="#">Contact</a>
+              <Link href="/privacy">Privacy</Link>
+              <Link href="/terms">Terms</Link>
+              <Link href="/contact">Contact</Link>
             </div>
           </div>
           <div className="footer-navs">
@@ -380,6 +420,8 @@ export default function Home() {
                   placeholder="Your Phone Number"
                   value={formData.phoneNumber}
                   onChange={handleFormChange}
+                  inputMode="tel"
+                  pattern="[0-9+]*"
                   required
                 />
               </div>
