@@ -9,11 +9,11 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
 }
 
 model WaitlistMember {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  id        String    @id @default(cuid())
   fullName  String
   email     String    @unique
   phoneNumber String

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { message } from "antd";
 
 const Logo = () => (
   <div className="footer-logo" style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -14,10 +15,12 @@ export default function Home() {
   const [activeCarouselDot, setActiveCarouselDot] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [heroEmail, setHeroEmail] = useState('');
   const [formData, setFormData] = useState({ fullName: '', email: '', phoneNumber: '' });
   const [waitlistPosition, setWaitlistPosition] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const toggleTheme = () => {
     const currentTheme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
@@ -36,7 +39,7 @@ export default function Home() {
     const formElement = e.currentTarget as HTMLFormElement;
     const emailInput = formElement.querySelector('input[type="email"]') as HTMLInputElement;
     const email = emailInput?.value || '';
-    
+
     setHeroEmail(email);
     setFormData(prev => ({ ...prev, email: email }));
     setShowModal(true);
@@ -44,7 +47,7 @@ export default function Home() {
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    
+
     // For phone number, only allow digits and +
     if (name === 'phoneNumber') {
       const filteredValue = value.replace(/[^\d+]/g, '');
@@ -56,7 +59,8 @@ export default function Home() {
 
   const handleModalSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    setIsLoading(true);
+
     try {
       const response = await fetch('/api/waitlist', {
         method: 'POST',
@@ -70,9 +74,9 @@ export default function Home() {
 
       if (!response.ok) {
         if (response.status === 409) {
-          alert('This email is already registered on our waitlist!');
+          messageApi.error('This email is already registered on our waitlist!');
         } else {
-          alert('An error occurred. Please try again.');
+          messageApi.error('An error occurred. Please try again.');
         }
         return;
       }
@@ -84,7 +88,9 @@ export default function Home() {
       setFormData({ fullName: '', email: '', phoneNumber: '' });
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('An error occurred. Please try again.');
+      messageApi.error('An error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -95,7 +101,7 @@ export default function Home() {
         const cardWidth = carouselRef.current.offsetWidth - 40;
         const gapWidth = 20;
         const cardTotal = cardWidth + gapWidth;
-        
+
         const newActiveIndex = Math.round((scrollLeft + cardWidth / 2) / cardTotal);
         setActiveCarouselDot(Math.min(newActiveIndex, 5));
       }
@@ -112,52 +118,53 @@ export default function Home() {
 
   return (
     <main>
+      {contextHolder}
       {/* Hero Section */}
       <section className="hero section">
         <div className="hero-pattern"></div>
         <div className="container">
 
-         <div className="hero-header">
-           <div className="logo-container">
-            <Logo />
-          </div>
+          <div className="hero-header">
+            <div className="logo-container">
+              <Logo />
+            </div>
 
-          <button
-            type="button"
-            className="theme-toggle"
-            onClick={toggleTheme}
-            aria-label="Toggle color mode"
-          >
-            <svg className="theme-toggle-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="4"></circle>
-              <path d="M12 2v2"></path>
-              <path d="M12 20v2"></path>
-              <path d="m4.93 4.93 1.41 1.41"></path>
-              <path d="m17.66 17.66 1.41 1.41"></path>
-              <path d="M2 12h2"></path>
-              <path d="M20 12h2"></path>
-              <path d="m6.34 17.66-1.41 1.41"></path>
-              <path d="m19.07 4.93-1.41 1.41"></path>
-            </svg>
-            <svg className="theme-toggle-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M12 3a6 6 0 0 0 9 7.4A9 9 0 1 1 12 3Z"></path>
-            </svg>
-          </button>
-         </div>
+            <button
+              type="button"
+              className="theme-toggle"
+              onClick={toggleTheme}
+              aria-label="Toggle color mode"
+            >
+              <svg className="theme-toggle-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M12 2v2"></path>
+                <path d="M12 20v2"></path>
+                <path d="m4.93 4.93 1.41 1.41"></path>
+                <path d="m17.66 17.66 1.41 1.41"></path>
+                <path d="M2 12h2"></path>
+                <path d="M20 12h2"></path>
+                <path d="m6.34 17.66-1.41 1.41"></path>
+                <path d="m19.07 4.93-1.41 1.41"></path>
+              </svg>
+              <svg className="theme-toggle-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M12 3a6 6 0 0 0 9 7.4A9 9 0 1 1 12 3Z"></path>
+              </svg>
+            </button>
+          </div>
 
           <div className="badge">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path></svg>
             Now Accepting Members
           </div>
-          
-          <h1>Nigeria&apos;s Premium<br/>Marketplace is Almost Here</h1>
+
+          <h1>Nigeria&apos;s Premium<br />Marketplace is Almost Here</h1>
           <p>LIMITRA is launching soon. Join the waitlist <br />for exclusive early access, first drops, and launch offers.</p>
-          
+
           <div className="form-wrapper">
             <form className="waitlist-form" onSubmit={handleJoinWaitlist}>
               <input type="email" placeholder="Your Email" required />
               <button type="submit" className="btn btn-primary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '6px'}}><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px' }}><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
                 Claim My Spot
               </button>
             </form>
@@ -245,7 +252,7 @@ export default function Home() {
           </div>
           <div className="carousel-dots">
             {[0, 1, 2, 3, 4, 5].map((index) => (
-              <span 
+              <span
                 key={index}
                 className={`carousel-dot ${activeCarouselDot === index ? 'active' : ''}`}
               ></span>
@@ -329,13 +336,13 @@ export default function Home() {
 
       {/* CTA Section */}
       <section className="fast">
-              <div className="">
+        <div className="">
           <h1>Spots are filling fast, 5000+ members and counting</h1>
         </div>
       </section>
       <section className="cta-section section">
         <div className="cta-pattern"></div>
-      
+
         <div className="container">
           <h2>Your spot is waiting,<br /> Claim it Now!</h2>
           <p>5000+ Nigerians already secured founding member access and exclusive launch pricing</p>
@@ -374,9 +381,9 @@ export default function Home() {
           </div>
           <div className="footer-navs">
             <p><Link href="/">Home</Link></p>
-                <p><a href="#">Guide</a></p>
-                  <p><a href="#about">About</a></p>
-              <p><a href="#faq">FAQ</a></p>
+            <p><a href="#">Guide</a></p>
+            <p><a href="#about">About</a></p>
+            <p><a href="#faq">FAQ</a></p>
           </div>
         </div>
       </footer>
@@ -425,12 +432,12 @@ export default function Home() {
                   required
                 />
               </div>
-              <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
-                Subscribe
+              <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={isLoading}>
+                {isLoading ? 'Subscribing...' : 'Subscribe'}
               </button>
             </form>
-            <button 
-              className="modal-close" 
+            <button
+              className="modal-close"
               onClick={() => setShowModal(false)}
               aria-label="Close modal"
             >
@@ -446,11 +453,11 @@ export default function Home() {
           <div className="modal-content confirmation-modal" onClick={(e) => e.stopPropagation()}>
             <h2>Congratulations</h2>
             <div className="confirmation-box">
-              <p>You&apos;re the <span className="position-number">{waitlistPosition}</span> Person to join our waitlist</p>
+              <p>You&apos;re number <span className="position-number">{waitlistPosition}</span> on our waitlist</p>
             </div>
-            <p className="confirmation-text">An email will be delivered to right before <span className="limitra-brand">Limitra&apos;s</span> launch</p>
-            <button 
-              className="btn btn-primary" 
+            <p className="confirmation-text">An email will be delivered to you right before <span className="limitra-brand">Limitra&apos;s</span> launch</p>
+            <button
+              className="btn btn-primary"
               onClick={() => setShowConfirmation(false)}
               style={{ width: '100%', marginTop: '20px' }}
             >

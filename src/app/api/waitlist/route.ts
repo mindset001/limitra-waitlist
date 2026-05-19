@@ -35,8 +35,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate random position between 100 and 5000
-    const position = Math.floor(Math.random() * (5000 - 100 + 1)) + 100;
+    // Determine actual position
+    const totalMembers = await prisma.waitlistMember.count();
+    const position = totalMembers + 1;
 
     // Create new waitlist member
     const member = await prisma.waitlistMember.create({
