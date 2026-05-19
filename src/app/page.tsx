@@ -198,7 +198,11 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="scroll-arrow">
+          <div 
+            className="scroll-arrow"
+            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+            style={{ cursor: 'pointer' }}
+          >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </div>
         </div>
@@ -213,8 +217,8 @@ export default function Home() {
               <div className="feature-icon">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
               </div>
-              <h3>First Access. Every Time.</h3>
-              <p>Shop premium products sourced from the best markets — before they sell out.</p>
+              <h3>Exclusive Product Drops</h3>
+              <p>Access limited-edition items before anyone else. Premium quality, limited quantity.</p>
             </div>
             <div className="feature-card">
               <div className="feature-icon">

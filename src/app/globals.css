@@ -519,6 +519,11 @@ button {
   transition: transform 0.3s;
 }
 
+:root[data-theme="dark"] .feature-card {
+  background: #111111;
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
 .feature-card:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-medium);
@@ -1122,7 +1127,7 @@ button {
     min-width: calc(100vw - 40px);
     scroll-snap-align: center;
     position: relative;
-    background: white;
+    background: var(--bg-panel);
     border: none;
     border-radius: 16px;
     /* padding: 50px 30px 30px; */
