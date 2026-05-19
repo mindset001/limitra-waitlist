@@ -70,6 +70,9 @@ export default function Home() {
       if (!response.ok) {
         if (response.status === 409) {
           messageApi.error('This email is already registered on our waitlist!');
+        } else if (data.error) {
+          // Display the specific validation error from the backend (e.g. "Invalid email format")
+          messageApi.error(data.error);
         } else {
           messageApi.error('An error occurred. Please try again.');
         }
